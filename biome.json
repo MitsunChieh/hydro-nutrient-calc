@@ -1,0 +1,42 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "organizeImports": {
+    "enabled": false
+  },
+  "formatter": {
+    "enabled": false
+  },
+  "css": {
+    "linter": {
+      "enabled": false
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "error",
+        "useExhaustiveDependencies": "warn"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "useFilenamingConvention": "off",
+        "useNumberNamespace": "off",
+        "useSelfClosingElements": "off",
+        "useTemplate": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noGlobalIsNan": "off",
+        "noGlobalIsFinite": "off"
+      },
+      "a11y": {
+        "noAutofocus": "off"
+      }
+    }
+  },
+  "files": {
+    "ignore": ["dist/", "node_modules/", ".astro/", "*.astro", "coverage/"]
+  }
+}
