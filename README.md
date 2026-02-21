@@ -1,43 +1,93 @@
-# Astro Starter Kit: Minimal
+# Hydroponic Nutrient Calculator
 
-```sh
-npm create astro@latest -- --template minimal
+Free, open-source web calculator for hydroponic nutrient solutions. Enter fertilizer salts and instantly see ion concentrations in ppm and me/L — no signup required.
+
+**Live:** [hydro-nutrient-calc.pages.dev](https://hydro-nutrient-calc.pages.dev)
+
+## Features
+
+- **Preset Recipes** — Hoagland, Modified Hoagland, Yamazaki Lettuce/Tomato/Strawberry
+- **Chemical Input Mode** — manually enter fertilizer salt amounts, see resulting ion concentrations
+- **Target Solver** — specify desired ion targets, auto-calculate optimal chemical mix (NNLS solver)
+- **Stock Solution Helper** — calculate concentrate volumes for Tank A / Tank B setups
+- **Ion Visualization** — bar charts for concentration breakdown by chemical
+- **Nutrient Ratios** — N:P:K, Ca:Mg, NO₃:NH₄, K:Ca diagnostic ratios
+- **EC Estimation** — estimated electrical conductivity (mS/cm)
+- **Unit Switching** — toggle between ppm (mg/L) and me/L
+- **Water Volume Scaling** — set litre amount, see grams per chemical
+- **Custom Recipes** — save/load via localStorage
+- **Export** — copy text or download CSV
+- **i18n** — English, 繁體中文, 简体中文
+- **Dark / Light Mode** — system-aware with manual toggle
+- **Responsive** — works on mobile and desktop
+
+## Tech Stack
+
+| Layer | Choice |
+|-------|--------|
+| Framework | [Astro](https://astro.build) + [React](https://react.dev) |
+| Language | TypeScript |
+| Styling | CSS Modules + CSS custom properties |
+| Testing | [Vitest](https://vitest.dev) + Testing Library (289 tests, 92% coverage) |
+| Linting | [Biome](https://biomejs.dev) |
+| Deployment | [Cloudflare Pages](https://pages.cloudflare.com) |
+| CI | GitHub Actions |
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server (localhost:4321)
+npm run dev
+
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Lint
+npm run lint
+
+# Type check
+npx tsc --noEmit
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Deployment
 
-## 🚀 Project Structure
+The project is configured for Cloudflare Pages.
 
-Inside of your Astro project, you'll see the following folders and files:
+### Environment Variables (optional)
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+| Variable | Purpose |
+|----------|---------|
+| `PUBLIC_GA_ID` | Google Analytics 4 measurement ID (`G-XXXXXXXXXX`) |
+| `PUBLIC_ADSENSE_ID` | Google AdSense publisher ID (`ca-pub-XXXXXXXXXXXXXXXX`) |
+
+## Project Structure
+
+```
+src/
+├── components/     # React components + tests
+├── data/           # Chemical & recipe data
+├── engine/         # Calculation engine + NNLS solver
+├── i18n/           # Locale files (en, zh-TW, zh-CN)
+└── pages/          # Astro page (index.astro)
+public/
+├── favicon.svg
+├── og-image.svg
+├── robots.txt
+└── _headers        # Cloudflare security headers
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## License
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+MIT
