@@ -13,9 +13,15 @@ yarn-error.log*
 pnpm-debug.log*
 
 
+# test coverage
+coverage/
+
 # environment variables
 .env
 .env.production
+
+# local Claude Code config (public template: CLAUDE.md.example)
+CLAUDE.md
 
 # macOS-specific files
 .DS_Store
