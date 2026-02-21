@@ -1,5 +1,26 @@
 ---
+import NutrientCalculator from '../components/NutrientCalculator';
 
+const title = 'Hydroponic Nutrient Calculator — ppm & me/L from Fertilizer Salts';
+const description = 'Free hydroponic nutrient calculator. Select a preset recipe or enter your own fertilizer salts to instantly calculate ion concentrations in ppm and me/L.';
+const url = 'https://hydro-nutrient-calc.pages.dev';
+const gaId = import.meta.env.PUBLIC_GA_ID || '';
+const adsenseId = import.meta.env.PUBLIC_ADSENSE_ID || '';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'WebApplication',
+	name: 'Hydroponic Nutrient Calculator',
+	description,
+	url,
+	applicationCategory: 'UtilityApplication',
+	operatingSystem: 'Any',
+	offers: {
+		'@type': 'Offer',
+		price: '0',
+		priceCurrency: 'USD',
+	},
+};
 ---
 
 <html lang="en">
@@ -7,11 +28,63 @@
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={url} />
+		<meta property="og:image" content={`${url}/og-image.svg`} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={`${url}/og-image.svg`} />
+
+		<!-- Theme Color -->
+		<meta name="theme-color" content="#f2f4f7" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)" />
+
+		<!-- Canonical -->
+		<link rel="canonical" href={url} />
+
+		<!-- JSON-LD -->
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+		<!-- GA4 (only loads when PUBLIC_GA_ID is set) -->
+		{gaId && (
+			<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+			<script define:vars={{ gaId }}>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', gaId);
+			</script>
+		)}
+
+		<style>
+			body {
+				margin: 0;
+				background: var(--color-bg, #f2f4f7);
+				transition: background 0.25s ease;
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<NutrientCalculator client:load />
+
+		{adsenseId && (
+			<script
+				async
+				src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
+				crossorigin="anonymous"
+			></script>
+		)}
 	</body>
 </html>
