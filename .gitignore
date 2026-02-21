@@ -20,8 +20,8 @@ coverage/
 .env
 .env.production
 
-# local Claude Code config (public template: CLAUDE.md.example)
-CLAUDE.md
+# local Claude Code config (personal per-project settings)
+CLAUDE.local.md
 
 # macOS-specific files
 .DS_Store
