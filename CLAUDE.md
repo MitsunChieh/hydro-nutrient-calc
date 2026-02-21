@@ -30,6 +30,12 @@ Hydroponic Nutrient Calculator：水耕養液離子濃度計算工具。
 - **session 結束前必須 commit 目前進度**，未完成的用 `wip:` 前綴
 - Session 最後一個 commit message 須包含 `WIP:` 區塊，摘要目前進度與下次接續點
 
+## 檔案變更原則
+
+修改既有檔案時，一律以原始檔案為基礎做增量編輯。不重新生成，不憑記憶重寫。
+
+來源優先順序：**git history > 磁碟上的檔案 > 備份 > LLM 生成**（最後手段）。
+
 ## Session 結束慣例
 
 每次 session 結束前，依序做：
