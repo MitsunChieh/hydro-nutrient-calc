@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f1117"/>
+      <stop offset="100%" stop-color="#1a1d27"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4f7df9"/>
+      <stop offset="100%" stop-color="#6b93ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative grid lines -->
+  <g stroke="#2e3240" stroke-width="1" opacity="0.4">
+    <line x1="0" y1="157" x2="1200" y2="157"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="473" x2="1200" y2="473"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+
+  <!-- Accent bar at top -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+
+  <!-- Water drop icon -->
+  <g transform="translate(600, 195)" fill="url(#accent)">
+    <path d="M0-60 C-5-40-30 0-30 20 C-30 37-17 50 0 50 C17 50 30 37 30 20 C30 0 5-40 0-60Z" opacity="0.9"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="310" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="700" fill="#e8eaed">Hydroponic Nutrient Calculator</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="365" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#9ca3b0">ppm &amp; me/L from Fertilizer Salts</text>
+
+  <!-- Ion badges -->
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600">
+    <rect x="265" y="415" width="70" height="36" rx="8" fill="#4f7df9" opacity="0.15"/>
+    <text x="300" y="439" text-anchor="middle" fill="#6b93ff">NO₃⁻</text>
+
+    <rect x="365" y="415" width="70" height="36" rx="8" fill="#22c55e" opacity="0.15"/>
+    <text x="400" y="439" text-anchor="middle" fill="#4ade80">K⁺</text>
+
+    <rect x="465" y="415" width="70" height="36" rx="8" fill="#f59e0b" opacity="0.15"/>
+    <text x="500" y="439" text-anchor="middle" fill="#fbbf24">Ca²⁺</text>
+
+    <rect x="565" y="415" width="70" height="36" rx="8" fill="#4f7df9" opacity="0.15"/>
+    <text x="600" y="439" text-anchor="middle" fill="#6b93ff">Mg²⁺</text>
+
+    <rect x="665" y="415" width="80" height="36" rx="8" fill="#22c55e" opacity="0.15"/>
+    <text x="705" y="439" text-anchor="middle" fill="#4ade80">H₂PO₄⁻</text>
+
+    <rect x="775" y="415" width="70" height="36" rx="8" fill="#f59e0b" opacity="0.15"/>
+    <text x="810" y="439" text-anchor="middle" fill="#fbbf24">SO₄²⁻</text>
+
+    <rect x="875" y="415" width="60" height="36" rx="8" fill="#4f7df9" opacity="0.15"/>
+    <text x="905" y="439" text-anchor="middle" fill="#6b93ff">Fe</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="600" y="550" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6b7280">Free &amp; Open Source — No signup required</text>
+</svg>

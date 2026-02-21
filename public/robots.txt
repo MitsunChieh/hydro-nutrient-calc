@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hydro-nutrient-calc.pages.dev/sitemap-index.xml
