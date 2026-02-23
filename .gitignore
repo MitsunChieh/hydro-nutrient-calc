@@ -19,6 +19,7 @@ coverage/
 # environment variables
 .env
 .env.production
+*.local
 
 # local Claude Code config (personal per-project settings)
 CLAUDE.local.md
