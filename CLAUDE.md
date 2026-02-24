@@ -24,6 +24,7 @@ Hydroponic Nutrient Calculator：水耕養液離子濃度計算工具。
 - Commit 前綴：`feat:` `fix:` `refactor:` `style:` `chore:` `wip:`
 - **session 結束前必須 commit 目前進度**，未完成的用 `wip:` 前綴
 - Session 最後一個 commit message 須包含 `WIP:` 區塊，摘要目前進度與下次接續點
+- 新增使用者可見功能時，同步更新 README 的功能描述
 
 ## Project Commands（`.claude/commands/`）
 
@@ -52,6 +53,7 @@ Hydroponic Nutrient Calculator：水耕養液離子濃度計算工具。
 開新 session 時：
 1. 執行 `git log --grep="WIP:" -1` 查看上次 session 結束摘要
 2. 讀 sprint-log 確認當前 Phase 和待辦項目（路徑見 `CLAUDE.local.md`）
+3. 需要了解產品全貌時，讀 README
 
 ---
 
