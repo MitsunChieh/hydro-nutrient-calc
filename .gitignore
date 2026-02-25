@@ -21,8 +21,14 @@ coverage/
 .env.production
 *.local
 
-# local Claude Code config (personal per-project settings)
+# Claude Code (keep commands/ tracked)
 CLAUDE.local.md
+.claude/*
+!.claude/commands/
+
+# Sensitive
+*.key
+credentials.*
 
 # macOS-specific files
 .DS_Store
