@@ -1,8 +1,8 @@
-# Hydroponic Nutrient Calculator
+# FertiMath
 
 Free, open-source web calculator for hydroponic nutrient solutions. Enter fertilizer salts and instantly see ion concentrations in ppm and me/L — no signup required.
 
-**Live:** [hydro-nutrient-calc.pages.dev](https://hydro-nutrient-calc.pages.dev)
+**Live:** [fertimath.com](https://fertimath.com)
 
 ## Features
 
