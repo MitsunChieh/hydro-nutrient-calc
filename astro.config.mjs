@@ -5,6 +5,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://hydro-nutrient-calc.pages.dev',
+  site: 'https://fertimath.com',
   integrations: [react(), sitemap()],
 });
