@@ -57,6 +57,16 @@ const jsonLd = {
 		<!-- JSON-LD -->
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
+		<!-- Prevent dark mode flash: set data-theme before first paint -->
+		<script is:inline>
+			(function(){
+				var t = localStorage.getItem('theme');
+				if (t !== 'dark' && t !== 'light')
+					t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				document.documentElement.setAttribute('data-theme', t);
+			})();
+		</script>
+
 		<!-- GA4 (only loads when PUBLIC_GA_ID is set) -->
 		{gaId && (
 			<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
@@ -71,7 +81,12 @@ const jsonLd = {
 		<style>
 			body {
 				margin: 0;
-				background: var(--color-bg, #f2f4f7);
+				background: #f2f4f7;
+			}
+			[data-theme="dark"] body {
+				background: #0f1117;
+			}
+			body {
 				transition: background 0.25s ease;
 			}
 		</style>
