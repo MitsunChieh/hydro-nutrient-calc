@@ -15,14 +15,14 @@ describe('RecipeSelector', () => {
 
   it('renders title', () => {
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     expect(screen.getByText('Preset Recipe')).toBeInTheDocument();
   });
 
   it('shows built-in recipe options', () => {
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     expect(screen.getByText('Hoagland Solution')).toBeInTheDocument();
     expect(screen.getByText('Lettuce')).toBeInTheDocument();
@@ -31,14 +31,14 @@ describe('RecipeSelector', () => {
 
   it('shows Custom option', () => {
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     expect(screen.getByText('Custom')).toBeInTheDocument();
   });
 
   it('shows description for selected recipe', () => {
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     expect(screen.getByText(/general purpose reference/)).toBeInTheDocument();
   });
@@ -46,7 +46,7 @@ describe('RecipeSelector', () => {
   it('calls onSelect when recipe changes', async () => {
     const user = userEvent.setup();
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     const select = screen.getByRole('combobox');
     await user.selectOptions(select, 'lettuce');
@@ -55,14 +55,14 @@ describe('RecipeSelector', () => {
 
   it('has a select element', () => {
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 
   it('select has the correct value', () => {
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     const select = screen.getByRole('combobox') as HTMLSelectElement;
     expect(select.value).toBe('hoagland');
@@ -71,7 +71,7 @@ describe('RecipeSelector', () => {
   it('calls onSelect with empty array when Custom is selected', async () => {
     const user = userEvent.setup();
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     const select = screen.getByRole('combobox');
     await user.selectOptions(select, 'custom');
@@ -79,19 +79,19 @@ describe('RecipeSelector', () => {
   });
 
   it('shows saved recipes', () => {
-    saveRecipe('test', 'My Custom', [{ chemicalId: 'potassium-nitrate', mgPerL: 100 }]);
+    saveRecipe('My Custom', [{ chemicalId: 'potassium-nitrate', mgPerL: 100 }]);
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     // Saved recipe appears in both dropdown option and tag pill
     expect(screen.getAllByText('My Custom').length).toBeGreaterThanOrEqual(1);
   });
 
   it('selects a saved recipe from dropdown', async () => {
-    const saved = saveRecipe('test', 'My Custom', [{ chemicalId: 'potassium-nitrate', mgPerL: 100 }]);
+    const saved = saveRecipe('My Custom', [{ chemicalId: 'potassium-nitrate', mgPerL: 100 }]);
     const user = userEvent.setup();
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     const select = screen.getByRole('combobox');
     await user.selectOptions(select, saved.id);
@@ -101,10 +101,10 @@ describe('RecipeSelector', () => {
   });
 
   it('deletes a saved recipe via tag delete button', async () => {
-    saveRecipe('test', 'My Custom', [{ chemicalId: 'potassium-nitrate', mgPerL: 100 }]);
+    saveRecipe('My Custom', [{ chemicalId: 'potassium-nitrate', mgPerL: 100 }]);
     const user = userEvent.setup();
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     const deleteBtn = screen.getByTitle('Remove "My Custom"');
     await user.click(deleteBtn);
@@ -113,10 +113,10 @@ describe('RecipeSelector', () => {
   });
 
   it('resets to default when deleting the currently-selected saved recipe', async () => {
-    const saved = saveRecipe('test', 'Active', [{ chemicalId: 'potassium-nitrate', mgPerL: 100 }]);
+    const saved = saveRecipe('Active', [{ chemicalId: 'potassium-nitrate', mgPerL: 100 }]);
     const user = userEvent.setup();
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId={saved.id} onSelect={onSelect} />
+      <RecipeSelector selectedId={saved.id} onSelect={onSelect} />
     );
     const deleteBtn = screen.getByTitle('Remove "Active"');
     await user.click(deleteBtn);
@@ -126,10 +126,10 @@ describe('RecipeSelector', () => {
 
   it('refreshes saved list on recipes-updated event', () => {
     renderWithLocale(
-      <RecipeSelector workspaceId="test" selectedId="hoagland" onSelect={onSelect} />
+      <RecipeSelector selectedId="hoagland" onSelect={onSelect} />
     );
     // Save a recipe after render
-    saveRecipe('test', 'New One', [{ chemicalId: 'potassium-nitrate', mgPerL: 50 }]);
+    saveRecipe('New One', [{ chemicalId: 'potassium-nitrate', mgPerL: 50 }]);
     // Dispatch the event
     act(() => { window.dispatchEvent(new Event('recipes-updated')); });
     expect(screen.getAllByText('New One').length).toBeGreaterThanOrEqual(1);

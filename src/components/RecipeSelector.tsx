@@ -6,18 +6,13 @@ import { useT } from '../lib/i18n';
 import styles from './NutrientCalculator.module.css';
 
 interface Props {
-  workspaceId: string;
   selectedId: string;
   onSelect: (recipeId: string, chemicals: ChemicalInput[]) => void;
 }
 
-export default function RecipeSelector({ workspaceId, selectedId, onSelect }: Props) {
+export default function RecipeSelector({ selectedId, onSelect }: Props) {
   const { t } = useT();
-  const [saved, setSaved] = useState<SavedRecipe[]>([]);
-
-  useEffect(() => {
-    setSaved(getSavedRecipes(workspaceId));
-  }, [workspaceId]);
+  const [saved, setSaved] = useState<SavedRecipe[]>(() => getSavedRecipes());
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
@@ -41,8 +36,8 @@ export default function RecipeSelector({ workspaceId, selectedId, onSelect }: Pr
 
   const handleDelete = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    deleteSavedRecipe(workspaceId, id);
-    setSaved(getSavedRecipes(workspaceId));
+    deleteSavedRecipe(id);
+    setSaved(getSavedRecipes());
     if (selectedId === id) {
       const defaultRecipe = RECIPES[0];
       onSelect(defaultRecipe.id, defaultRecipe.chemicals.map((c) => ({ ...c })));
@@ -55,10 +50,10 @@ export default function RecipeSelector({ workspaceId, selectedId, onSelect }: Pr
 
   // Notify parent to refresh saved list (called after save)
   useEffect(() => {
-    const handler = () => setSaved(getSavedRecipes(workspaceId));
+    const handler = () => setSaved(getSavedRecipes());
     window.addEventListener('recipes-updated', handler);
     return () => window.removeEventListener('recipes-updated', handler);
-  }, [workspaceId]);
+  }, []);
 
   return (
     <div className={styles.card}>

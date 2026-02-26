@@ -22,23 +22,12 @@ export interface Messages {
     toggleTheme: string;
     switchToDark: string;
     switchToLight: string;
-    switchWorkspace: string;
   };
 
   nav: {
     recipeBrowser: string;
     targetSolver: string;
     tools: string;
-  };
-
-  workspace: {
-    title: string;
-    subtitle: string;
-    newWorkspace: string;
-    placeholder: string;
-    yourWorkspaces: string;
-    deleteWorkspace: string;
-    confirmDelete: string;
   };
 
   recipe: {

@@ -1,18 +1,11 @@
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { ChemicalInput, IonConcentration } from '../lib/types';
 import { calcSolution } from '../lib/engine';
 import { RECIPES } from '../lib/recipes';
-import {
-  saveRecipe,
-  getWorkspaceIdFromHash,
-  createWorkspace,
-  migrateGlobalData,
-  type WaterProfile,
-} from '../lib/storage';
+import { saveRecipe, type WaterProfile } from '../lib/storage';
 import { ION_ELEMENT_MAP } from '../lib/constants';
 import { exportAsText, exportAsCSV, copyToClipboard, downloadFile } from '../lib/export';
 import { LocaleProvider, useT, nextLocale, LOCALE_LABELS } from '../lib/i18n';
-import WorkspaceLanding from './WorkspaceLanding';
 import RecipeSelector from './RecipeSelector';
 import ChemicalInputs from './ChemicalInputs';
 import IonResultsTable from './IonResultsTable';
@@ -49,111 +42,6 @@ export default function NutrientCalculator() {
 function NutrientCalculatorInner() {
   const { locale, setLocale, t } = useT();
   const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme);
-  const [workspaceId, setWorkspaceId] = useState<string | null>(() => {
-    if (typeof window === 'undefined') return null;
-    return getWorkspaceIdFromHash();
-  });
-
-  // Listen for hash changes (browser back/forward)
-  useEffect(() => {
-    const handleHash = () => {
-      setWorkspaceId(getWorkspaceIdFromHash());
-    };
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
-
-  // Migrate old global data when entering a workspace
-  useEffect(() => {
-    if (workspaceId) {
-      migrateGlobalData(workspaceId);
-    }
-  }, [workspaceId]);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((t) => (t === 'light' ? 'dark' : 'light'));
-  };
-
-  const handleEnterWorkspace = useCallback((id: string) => {
-    // Ensure workspace exists
-    createWorkspace(id);
-    setWorkspaceId(id);
-  }, []);
-
-  const handleExitWorkspace = useCallback(() => {
-    window.location.hash = '';
-    setWorkspaceId(null);
-  }, []);
-
-  const localeSwitcher = (
-    <button
-      type="button"
-      className={styles.localeBtn}
-      onClick={() => setLocale(nextLocale(locale))}
-      title={LOCALE_LABELS[locale]}
-    >
-      {LOCALE_LABELS[locale]}
-    </button>
-  );
-
-  // Show landing page if no workspace selected
-  if (!workspaceId) {
-    return (
-      <>
-        <div className={styles.container}>
-          <header className={styles.header}>
-            <div />
-            <div className={styles.headerBtns}>
-              {localeSwitcher}
-              <button
-                type="button"
-                className={styles.themeToggle}
-                onClick={toggleTheme}
-                aria-label={t.app.toggleTheme}
-              >
-                {theme === 'light' ? '\u263E' : '\u2600'}
-              </button>
-            </div>
-          </header>
-        </div>
-        <main>
-          <WorkspaceLanding onEnter={handleEnterWorkspace} />
-        </main>
-      </>
-    );
-  }
-
-  return (
-    <WorkspaceView
-      workspaceId={workspaceId}
-      theme={theme}
-      toggleTheme={toggleTheme}
-      onExit={handleExitWorkspace}
-      localeSwitcher={localeSwitcher}
-    />
-  );
-}
-
-// Separate component so hooks are unconditional
-function WorkspaceView({
-  workspaceId,
-  theme,
-  toggleTheme,
-  onExit,
-  localeSwitcher,
-}: {
-  workspaceId: string;
-  theme: string;
-  toggleTheme: () => void;
-  onExit: () => void;
-  localeSwitcher: React.ReactNode;
-}) {
-  const { t } = useT();
   const [activeTab, setActiveTab] = useState<TabId>('recipe');
   const [recipeId, setRecipeId] = useState(defaultRecipe.id);
   const [chemicals, setChemicals] = useState<ChemicalInput[]>(
@@ -164,6 +52,15 @@ function WorkspaceView({
   const [showSave, setShowSave] = useState(false);
   const [copied, setCopied] = useState(false);
   const [waterProfile, setWaterProfile] = useState<WaterProfile | null>(null);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((t) => (t === 'light' ? 'dark' : 'light'));
+  };
 
   const result = useMemo(() => {
     const validInputs = chemicals.filter((c) => c.mgPerL > 0);
@@ -178,7 +75,6 @@ function WorkspaceView({
     return result.totals.map((t) => {
       const waterPpm = waterProfile.ions[t.ion] ?? 0;
       if (waterPpm <= 0) return t;
-      // Convert water ppm back to mmol/L to properly recalc me/L
       const { atomicWeight } = ION_ELEMENT_MAP[t.ion];
       const waterMmol = waterPpm / atomicWeight;
       const newPpm = Math.max(0, t.ppm - waterPpm);
@@ -207,7 +103,7 @@ function WorkspaceView({
 
   const handleSave = () => {
     if (!saveName.trim() || chemicals.length === 0) return;
-    const saved = saveRecipe(workspaceId, saveName.trim(), chemicals);
+    const saved = saveRecipe(saveName.trim(), chemicals);
     setRecipeId(saved.id);
     setSaveName('');
     setShowSave(false);
@@ -217,19 +113,16 @@ function WorkspaceView({
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h1 className={styles.title}>{t.app.title}</h1>
+        <div className={styles.headerBtns}>
           <button
             type="button"
-            className={styles.workspaceBackBtn}
-            onClick={onExit}
-            title={t.app.switchWorkspace}
+            className={styles.localeBtn}
+            onClick={() => setLocale(nextLocale(locale))}
+            title={LOCALE_LABELS[locale]}
           >
-            &larr;
+            {LOCALE_LABELS[locale]}
           </button>
-          <h1 className={styles.title}>{t.app.title}</h1>
-        </div>
-        <div className={styles.headerBtns}>
-          {localeSwitcher}
           <button
             type="button"
             className={styles.themeToggle}
@@ -284,7 +177,6 @@ function WorkspaceView({
       {activeTab === 'recipe' && (
         <div role="tabpanel" id="panel-recipe" aria-labelledby="tab-recipe">
           <RecipeSelector
-            workspaceId={workspaceId}
             selectedId={recipeId}
             onSelect={handleRecipeSelect}
           />
@@ -360,10 +252,7 @@ function WorkspaceView({
             )}
           </div>
 
-          <WaterProfileInput
-            workspaceId={workspaceId}
-            onChange={setWaterProfile}
-          />
+          <WaterProfileInput onChange={setWaterProfile} />
 
           {result && adjustedTotals && (
             <>

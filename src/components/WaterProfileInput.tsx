@@ -5,7 +5,6 @@ import { useT } from '../lib/i18n';
 import styles from './NutrientCalculator.module.css';
 
 interface Props {
-  workspaceId: string;
   onChange: (profile: WaterProfile | null) => void;
 }
 
@@ -22,16 +21,16 @@ const WATER_IONS: { ion: IonId; label: string }[] = [
   { ion: 'Si', label: 'Si' },
 ];
 
-export default function WaterProfileInput({ workspaceId, onChange }: Props) {
+export default function WaterProfileInput({ onChange }: Props) {
   const { t } = useT();
   const [enabled, setEnabled] = useState(false);
   const [name, setName] = useState('');
   const [ions, setIons] = useState<Partial<Record<IonId, number>>>({});
 
-  // Load from storage on mount / workspace change
+  // Load from storage on mount
   // biome-ignore lint/correctness/useExhaustiveDependencies: onChange is a stable setter from parent useState
   useEffect(() => {
-    const profile = getWaterProfile(workspaceId);
+    const profile = getWaterProfile();
     if (profile) {
       setEnabled(true);
       setName(profile.name);
@@ -43,17 +42,17 @@ export default function WaterProfileInput({ workspaceId, onChange }: Props) {
       setIons({});
       onChange(null);
     }
-  }, [workspaceId]);
+  }, []);
 
   const handleToggle = () => {
     const next = !enabled;
     setEnabled(next);
     if (!next) {
-      setWaterProfile(workspaceId, null);
+      setWaterProfile(null);
       onChange(null);
     } else {
       const profile: WaterProfile = { name: name || 'Tap Water', ions };
-      setWaterProfile(workspaceId, profile);
+      setWaterProfile(profile);
       onChange(profile);
     }
   };
@@ -64,7 +63,7 @@ export default function WaterProfileInput({ workspaceId, onChange }: Props) {
     if (num === 0) delete next[ion];
     setIons(next);
     const profile: WaterProfile = { name: name || 'Tap Water', ions: next };
-    setWaterProfile(workspaceId, profile);
+    setWaterProfile(profile);
     onChange(profile);
   };
 
@@ -72,7 +71,7 @@ export default function WaterProfileInput({ workspaceId, onChange }: Props) {
     setName(value);
     if (enabled) {
       const profile: WaterProfile = { name: value || 'Tap Water', ions };
-      setWaterProfile(workspaceId, profile);
+      setWaterProfile(profile);
     }
   };
 

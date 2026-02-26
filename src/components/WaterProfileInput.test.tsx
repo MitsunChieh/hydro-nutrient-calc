@@ -14,23 +14,23 @@ describe('WaterProfileInput', () => {
   });
 
   it('renders title', () => {
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     expect(screen.getByText('Water Profile')).toBeInTheDocument();
   });
 
   it('has a toggle checkbox', () => {
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     expect(screen.getByRole('checkbox')).toBeInTheDocument();
   });
 
   it('shows "Off" when disabled', () => {
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     expect(screen.getByText('Off')).toBeInTheDocument();
   });
 
   it('shows ion inputs when enabled', async () => {
     const user = userEvent.setup();
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     await act(async () => {
       await user.click(screen.getByRole('checkbox'));
     });
@@ -41,7 +41,7 @@ describe('WaterProfileInput', () => {
 
   it('shows description when enabled', async () => {
     const user = userEvent.setup();
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     await act(async () => {
       await user.click(screen.getByRole('checkbox'));
     });
@@ -50,7 +50,7 @@ describe('WaterProfileInput', () => {
 
   it('calls onChange when toggled on', async () => {
     const user = userEvent.setup();
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     await act(async () => {
       await user.click(screen.getByRole('checkbox'));
     });
@@ -59,7 +59,7 @@ describe('WaterProfileInput', () => {
 
   it('calls onChange(null) when toggled off', async () => {
     const user = userEvent.setup();
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     // Toggle on
     await act(async () => { await user.click(screen.getByRole('checkbox')); });
     onChange.mockClear();
@@ -70,7 +70,7 @@ describe('WaterProfileInput', () => {
 
   it('updates ion value and calls onChange with profile', async () => {
     const user = userEvent.setup();
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     // Enable
     await act(async () => { await user.click(screen.getByRole('checkbox')); });
     onChange.mockClear();
@@ -86,14 +86,14 @@ describe('WaterProfileInput', () => {
 
   it('shows source name input when enabled', async () => {
     const user = userEvent.setup();
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     await act(async () => { await user.click(screen.getByRole('checkbox')); });
     expect(screen.getByPlaceholderText(/Water source name/)).toBeInTheDocument();
   });
 
   it('loads saved profile from storage on mount', () => {
-    setWaterProfile('test', { name: 'City Water', ions: { Ca: 40, Mg: 15 } });
-    renderWithLocale(<WaterProfileInput workspaceId="test" onChange={onChange} />);
+    setWaterProfile({ name: 'City Water', ions: { Ca: 40, Mg: 15 } });
+    renderWithLocale(<WaterProfileInput onChange={onChange} />);
     // Should show enabled state with "Subtracting" text
     expect(screen.getByText('Subtracting')).toBeInTheDocument();
     expect(onChange).toHaveBeenCalledWith(

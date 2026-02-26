@@ -22,23 +22,12 @@ export const zhCN: Messages = {
     toggleTheme: '切换主题',
     switchToDark: '切换至深色模式',
     switchToLight: '切换至浅色模式',
-    switchWorkspace: '切换工作区',
   },
 
   nav: {
     recipeBrowser: '配方浏览',
     targetSolver: '目标求解',
     tools: '工具',
-  },
-
-  workspace: {
-    title: '水培营养液计算器',
-    subtitle: '创建工作区以开始使用。每个工作区会保存各自的配方、水质数据和设置。',
-    newWorkspace: '新工作区',
-    placeholder: '例如：我的菜园、温室 A...',
-    yourWorkspaces: '你的工作区',
-    deleteWorkspace: '删除工作区',
-    confirmDelete: '确定删除此工作区及其所有数据？',
   },
 
   recipe: {

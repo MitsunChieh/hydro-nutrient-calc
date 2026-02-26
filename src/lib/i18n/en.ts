@@ -22,23 +22,12 @@ export const en: Messages = {
     toggleTheme: 'Toggle theme',
     switchToDark: 'Switch to dark mode',
     switchToLight: 'Switch to light mode',
-    switchWorkspace: 'Switch workspace',
   },
 
   nav: {
     recipeBrowser: 'Recipe Browser',
     targetSolver: 'Target Solver',
     tools: 'Tools',
-  },
-
-  workspace: {
-    title: 'Hydroponic Nutrient Calculator',
-    subtitle: 'Create a workspace to get started. Each workspace saves its own recipes, water profile, and settings.',
-    newWorkspace: 'New Workspace',
-    placeholder: 'e.g. My Garden, Greenhouse A...',
-    yourWorkspaces: 'Your Workspaces',
-    deleteWorkspace: 'Delete workspace',
-    confirmDelete: 'Delete this workspace and all its data?',
   },
 
   recipe: {

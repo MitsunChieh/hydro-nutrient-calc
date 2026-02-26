@@ -22,23 +22,12 @@ export const zhTW: Messages = {
     toggleTheme: '切換主題',
     switchToDark: '切換至深色模式',
     switchToLight: '切換至淺色模式',
-    switchWorkspace: '切換工作區',
   },
 
   nav: {
     recipeBrowser: '配方瀏覽',
     targetSolver: '目標求解',
     tools: '工具',
-  },
-
-  workspace: {
-    title: '水耕養液計算器',
-    subtitle: '建立工作區以開始使用。每個工作區會儲存各自的配方、水質資料和設定。',
-    newWorkspace: '新工作區',
-    placeholder: '例如：我的菜園、溫室 A...',
-    yourWorkspaces: '你的工作區',
-    deleteWorkspace: '刪除工作區',
-    confirmDelete: '確定刪除此工作區及其所有資料？',
   },
 
   recipe: {
